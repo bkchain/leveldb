@@ -39,6 +39,8 @@
 
 #include <stdint.h>
 
+typedef int32_t ssize_t;
+
 namespace leveldb {
 namespace port {
 
@@ -106,6 +108,10 @@ class AtomicPointer {
 
   void NoBarrier_Store(void* v);
 };
+
+typedef void* OnceType;
+#define LEVELDB_ONCE_INIT 0
+extern void InitOnce(OnceType* once, void (*initializer)());
 
 inline bool Snappy_Compress(const char* input, size_t length,
                             ::std::string* output) {

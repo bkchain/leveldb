@@ -38,7 +38,7 @@
 #include "leveldb/slice.h"
 
 #ifdef WIN32
-#include "util/win_logger.h"
+#include "port/win_logger.h"
 #else
 #include "util/posix_logger.h"
 #endif

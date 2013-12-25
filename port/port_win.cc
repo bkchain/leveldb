@@ -141,5 +141,22 @@ void AtomicPointer::NoBarrier_Store(void* v) {
   rep_ = v;
 }
 
+BOOL CALLBACK InitHandleFunction(
+	PINIT_ONCE InitOnce,
+	PVOID Parameter,
+	PVOID *lpContext)
+{
+	auto initializer = (void(*)())Parameter;
+	initializer();
+	return TRUE;
+}
+
+void InitOnce(OnceType* once, void(*initializer)()) {
+	auto real_once = new INIT_ONCE(INIT_ONCE_STATIC_INIT);
+	*once = real_once;
+	PVOID lpContext;
+	InitOnceExecuteOnce(real_once, InitHandleFunction, initializer, &lpContext);
+}
+
 }
 }
